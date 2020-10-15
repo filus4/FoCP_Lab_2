@@ -1,21 +1,33 @@
 #include <iostream>
 #include <cmath>
 
-int main() {
+bool is_prime(int number) {
 
+    for (int i = 2; i < number; i += 1 ) {
+        if (number % i == 0 ) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int read_int() {
     std::cout << "Please insert a number: " << std::endl;
 
     int number;
     std::cin >> number;
 
-    for (int i = 2; i < number; i += 1 ) {
-        if (number % i == 0 ) {
-            std::cout << "Your number is not prime ;-;" << std::endl;
-            return 0;
-        }
-    }
+    return number;
+}
 
-    std::cout << "Your number is prime ^-^" << std::endl;
+int main() {
+    int number = read_int();
+
+    if (is_prime(number)) {
+        std::cout << "Your number is prime ^-^" << std::endl;
+    }   else {
+        std::cout << "Your number is not prime ;-;" << std::endl;
+    }
 
     return 0;
 }
