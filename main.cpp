@@ -1,39 +1,53 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+
+int read_int() {
+    std::cout << "Please introduce a number:" << std::endl;
+
+    int n;
+    std::cin >> n;
+
+    return n;
+}
 
 int main() {
 
-    // 1- Open/Create the file stream
-    // 2- While the file is open, you can read/write
-    // 3- Close the file in order to keep the changes
+    // 1- Ask how many N numbers we want to write in the file
+    // 2- We will read from command line N numbers
+    // 3- Numbers will be written to a file
+    // 4- Read all numbers from file and calculate mean and std
+
+    std::cout << "How many numbers you want to write?" << std::endl;
+    int total_numbers = read_int();
+
+    std::vector<int> values;
+
+    for (int i = 0; i < total_numbers; i++) {
+        int temp = read_int();
+        values.push_back(temp);
+    }
 
     std::ofstream file;
-    file.open("C:/Users/Marcel/Programowanie/VSC/FoCP_Lab_2/new_file.txt");
-    file << true;
+    file.open("C:/Users/Marcel/Programowanie/VSC/FoCP_Lab_2/values.txt");
+    //  , std::ios_base::app <--- to not overwrite file but to add
+    for (int i = 0; i < total_numbers; i++) {
+        file << values[i] << "\n";
+    } 
 
     file.close();   
-
-    // 1- Open the file stream
-    // 2- While the file is open, you can read
-    // 3- Print the contents of the file
-    // 4- Close the file in order to keep the changes
     
-    std::ifstream new_file("C:/Users/Marcel/Programowanie/VSC/FoCP_Lab_2/new_file.txt");
+    std::vector<int> read_values;
+
+    std::ifstream new_file("C:/Users/Marcel/Programowanie/VSC/FoCP_Lab_2/values.txt");
     
     if (new_file.is_open()) {
-        // 1- Define a variable that will store each line.
-        // 2- While there are lines to read, we will read them, and store them in our temporary variable.
         
         std::string line;
-        int selected_line = 1;
-
-        int counter = 0;
 
         while (getline(new_file, line)) {
-            if (counter == selected_line){
-                std::cout << line << std::endl;;
-            }
+            read_values.push_back(std::stoi(line));
         }
 
         new_file.close();
@@ -41,6 +55,16 @@ int main() {
     }   else {
         std::cout << "There was a problem opening the file";
     }
+
+    float sum = 0;
+    
+    for(int i = 0; i < total_numbers; i++) {
+        sum += read_values[i];
+    }
+    
+    float mean = sum / total_numbers;
+
+    std::cout << "Mean = " << mean << std::endl;
 
     return 0;
 }
