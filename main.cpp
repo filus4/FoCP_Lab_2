@@ -1,64 +1,46 @@
 #include <iostream>
-
-int pow(int base, int power) {
-    int result = 1;
-    
-    for (int i = 0; i < power; i++) {
-        result *= base;
-    }
-
-    return result;
-}
-
-int fibonacci_iterative(int index)
-{
-    int a = 0;
-    int b = 1;
-
-    if (index == 0 || index == 1)
-    {
-        return index;
-    }
-
-    for (int i = 1; i < index; i++)
-    {
-        int tmp = a + b;
-        a = b;
-        b = tmp;
-    }
-
-    return b;
-}
-
-int fibonacci_recursive(int index) {
-    if (index < 2) {
-        return index;
-    }
-
-    return fibonacci_recursive(index - 2) + fibonacci_recursive(index - 1);
-}
-
-int read_int() {
-    std::cout << "Please introduce a number:" << std::endl;
-
-    int n;
-    std::cin >> n;
-
-    return n;
-}
-
-
-// 1 - Read base from command line
-// 2 - Read power from command line 
-// 3 - Calculate power
-// 4 - Print the result
+#include <fstream>
+#include <string>
 
 int main() {
-    int index = read_int();
 
-    int result = fibonacci_iterative(index);
+    // 1- Open/Create the file stream
+    // 2- While the file is open, you can read/write
+    // 3- Close the file in order to keep the changes
 
-    std::cout << "The result is: " << result << std::endl;
+    std::ofstream file;
+    file.open("C:/Users/Marcel/Programowanie/VSC/FoCP_Lab_2/new_file.txt");
+    file << true;
+
+    file.close();   
+
+    // 1- Open the file stream
+    // 2- While the file is open, you can read
+    // 3- Print the contents of the file
+    // 4- Close the file in order to keep the changes
+    
+    std::ifstream new_file("C:/Users/Marcel/Programowanie/VSC/FoCP_Lab_2/new_file.txt");
+    
+    if (new_file.is_open()) {
+        // 1- Define a variable that will store each line.
+        // 2- While there are lines to read, we will read them, and store them in our temporary variable.
+        
+        std::string line;
+        int selected_line = 1;
+
+        int counter = 0;
+
+        while (getline(new_file, line)) {
+            if (counter == selected_line){
+                std::cout << line << std::endl;;
+            }
+        }
+
+        new_file.close();
+
+    }   else {
+        std::cout << "There was a problem opening the file";
+    }
 
     return 0;
 }
